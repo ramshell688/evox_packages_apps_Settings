@@ -128,13 +128,21 @@ public class StorageSelectionPreferenceController extends BasePreferenceControll
             }
 
             TextView textView = null;
-            try {
+            
+            // Check if the view is directly a TextView
+            if (view instanceof TextView) {
                 textView = (TextView) view;
-            } catch (ClassCastException e) {
-                throw new IllegalStateException("Default view should be a TextView, ", e);
+            } else {
+                // Look for the standard Android TextView ID
+                textView = view.findViewById(android.R.id.text1);
             }
+            
+            if (textView == null) {
+                throw new IllegalStateException("Could not find TextView in regular view");
+            }
+            
             textView.setText(getItem(position).getDescription());
-            return textView;
+            return view;
         }
 
         @Override
@@ -144,14 +152,21 @@ public class StorageSelectionPreferenceController extends BasePreferenceControll
             }
 
             TextView textView = null;
-            try {
+            
+            // Check if the view is directly a TextView
+            if (view instanceof TextView) {
                 textView = (TextView) view;
-            } catch (ClassCastException e) {
-                throw new IllegalStateException("Default drop down view should be a TextView, ", e);
+            } else {
+                // Look for the standard Android TextView ID
+                textView = view.findViewById(android.R.id.text1);
             }
+            
+            if (textView == null) {
+                throw new IllegalStateException("Could not find TextView in dropdown view");
+            }
+            
             textView.setText(getItem(position).getDescription());
-            return textView;
+            return view;
         }
     }
 }
-
